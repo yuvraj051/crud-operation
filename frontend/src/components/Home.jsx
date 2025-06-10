@@ -3,10 +3,10 @@ import axios from "axios";
 
 export default function Home() {
   const [studentsList, setstudentsList] = useState([]);
-  const [Name, setName] = useState("y");
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
-  const [gender, setgender] = useState("");
+  const [txt_name, setName] = useState("");
+  const [txt_email, setemail] = useState("");
+  const [txt_password, setpassword] = useState("");
+  const [txt_gender, setgender] = useState("");
 
   const fetchData = async () => {
     try {
@@ -24,10 +24,10 @@ export default function Home() {
       const response = await axios.post(
         "http://localhost:3000/user/api/create",
         {
-          name: Name,
-          email: email,
-          password: password,
-          gender: gender,
+          name: txt_name,
+          email: txt_email,
+          password: txt_password,
+          gender: txt_gender,
         },
         {
           headers: {
@@ -39,6 +39,13 @@ export default function Home() {
     } catch (error) {
       console.log(error.response.data);
     }
+    const loadData = async () => {
+      await fetchData();
+    };
+
+    // Call the inner async function
+    loadData();
+    clear_field();
   };
 
   useEffect(() => {
@@ -56,7 +63,16 @@ export default function Home() {
 
   const on_edit = (e) => {
     console.log(e);
+    clear_field();
   };
+
+  const clear_field = () => {
+    setName("");
+    setemail("");
+    setpassword("");
+    setgender("");
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded shadow-lg w-full max-w-md p-6">
@@ -70,44 +86,48 @@ export default function Home() {
             name="name"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Student Name"
+            value={txt_name}
             onChange={(e) => {
               setName(e.target.value);
             }}
           />
-
           <input
             type="email"
             name="email"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Email"
+            value={txt_email}
             onChange={(e) => {
               setemail(e.target.value);
             }}
           />
-
           <input
             type="password"
             name="age"
             className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="password"
+            value={txt_password}
             onChange={(e) => {
               setpassword(e.target.value);
             }}
           />
-
-          <select
+          gender <br />
+          <input
+            type="radio"
+            onClick={() => setgender("male")}
             name="gender"
-            id=""
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            onChange={(e) => {
-              setgender(e.target.value);
-            }}
-          >
-            <option select="true" value="male">
-              male
-            </option>
-            <option value="female">female</option>
-          </select>
+            checked={txt_gender === "male" ? true : false}
+            value={"male"}
+          />{" "}
+          male
+          <input
+            type="radio"
+            name="gender"
+            checked={txt_gender === "female" ? true : false}
+            onClick={() => setgender("female")}
+            value={"female"}
+          />{" "}
+          female
           <button
             type="button"
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
