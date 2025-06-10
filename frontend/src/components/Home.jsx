@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Home() {
+  const [submit_state, setset_submit_state] = useState("insert");
   const [studentsList, setstudentsList] = useState([]);
+  const [id, setid] = useState("");
   const [txt_name, setName] = useState("");
   const [txt_email, setemail] = useState("");
   const [txt_password, setpassword] = useState("");
@@ -17,6 +19,8 @@ export default function Home() {
       console.error("Error fetching data:", error);
       setstudentsList([]);
     }
+    clear_field();
+    setset_submit_state("insert");
   };
   const on_add = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -40,13 +44,7 @@ export default function Home() {
     } catch (error) {
       console.log(error.response.data);
     }
-    const loadData = async () => {
-      await fetchData();
-    };
-
-    // Call the inner async function
-    loadData();
-    clear_field();
+    fetchData();
   };
 
   useEffect(() => {
@@ -67,18 +65,43 @@ export default function Home() {
       console.log(error.response.data);
     }
     console.log(e);
-    clear_field();
-    const loadData = async () => {
-      await fetchData();
-    };
 
-    // Call the inner async function
-    loadData();
+    fetchData();
   };
 
-  const on_edit = (e) => {
+  const on_edit_value = (e) => {
     console.log(e);
-    clear_field();
+    setid(e._id);
+    setName(e.name);
+    setemail(e.email);
+    setpassword(e.password);
+    setgender(e.gender);
+    setset_submit_state("update");
+
+    // clear_field();
+  };
+
+  const on_update = async () => {
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/user/api/update/" + id,
+        {
+          name: txt_name,
+          email: txt_email,
+          password: txt_password,
+          gender: txt_gender,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Add authorization headers if needed, e.g., 'Authorization': `Bearer ${yourToken}`
+          },
+        }
+      );
+      fetchData();
+    } catch (error) {
+      console.log(error.response.data);
+    }
   };
 
   const clear_field = () => {
@@ -146,9 +169,9 @@ export default function Home() {
           <button
             type="button"
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
-            onClick={on_add}
+            onClick={submit_state === "insert" ? on_add : on_update}
           >
-            add
+            {submit_state === "insert" ? "add" : "update"}
           </button>
         </form>
 
@@ -174,7 +197,7 @@ export default function Home() {
                 <button
                   type="button"
                   className="bg-green-600 rounded-xl mb-1 p-2 w-full"
-                  onClick={() => on_edit(stu._id)}
+                  onClick={() => on_edit_value(stu)}
                 >
                   edit
                 </button>
