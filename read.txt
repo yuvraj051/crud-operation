@@ -1,5 +1,19 @@
-BACKEND API ===
+                 
+               ====    BACKEND DETAILS   ===
+               
 1.READ    === >>>>        http://localhost:3000/user/api/read
 2.CREATE  === >>>>        http://localhost:3000/user/api/create
 3.UPDATE  === >>>>        http://localhost:3000/user/api/update
 4.DELETE  === >>>>        http://localhost:3000/user/api/delete
+
+
+PACKAGES USE ===
+├── bcrypt@6.0.0
+├── dotenv@16.5.0
+├── express@5.1.0
+├── mongoose@8.15.1
+└── nodemon@3.1.10
+
+
+
+===   FRONTEND DETAILS    ===
