@@ -35,6 +35,11 @@ export const create = async (req, res) => {
 };
 export const read = async (req, res) => {
   try {
+    const data = await User.find();
+    if (data.length == 0) {
+      return res.status(409).json({ message: "No users exist..." });
+    }
+    res.status(200).json({ data });
   } catch (error) {
     res.status(400).json({ error, message: "internal server error..." });
   }

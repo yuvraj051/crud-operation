@@ -21,6 +21,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", userSchema); // Clean name, no extra spaces
+const User = mongoose.model("User", userSchema);
 
-export default User; // Export the model, not the schema
+export default User;
