@@ -17,7 +17,9 @@ export default function Home() {
       console.error("Error fetching data:", error);
     }
   };
-  const on_add = async () => {
+  const on_add = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
     try {
       const response = await axios.post(
         "http://localhost:3000/user/api/create",
@@ -34,7 +36,9 @@ export default function Home() {
           },
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.response.data);
+    }
   };
 
   useEffect(() => {
