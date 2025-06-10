@@ -15,6 +15,7 @@ export default function Home() {
       setstudentsList(response.data.users);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setstudentsList([]);
     }
   };
   const on_add = async (e) => {
@@ -57,8 +58,22 @@ export default function Home() {
     loadData();
   }, []);
 
-  const on_delete = (e) => {
+  const on_delete = async (e) => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3000/user/api/delete/" + e
+      );
+    } catch (error) {
+      console.log(error.response.data);
+    }
     console.log(e);
+    clear_field();
+    const loadData = async () => {
+      await fetchData();
+    };
+
+    // Call the inner async function
+    loadData();
   };
 
   const on_edit = (e) => {
@@ -114,7 +129,7 @@ export default function Home() {
           gender <br />
           <input
             type="radio"
-            onClick={() => setgender("male")}
+            onChange={() => setgender("male")}
             name="gender"
             checked={txt_gender === "male" ? true : false}
             value={"male"}
@@ -124,7 +139,7 @@ export default function Home() {
             type="radio"
             name="gender"
             checked={txt_gender === "female" ? true : false}
-            onClick={() => setgender("female")}
+            onChange={() => setgender("female")}
             value={"female"}
           />{" "}
           female
@@ -159,14 +174,14 @@ export default function Home() {
                 <button
                   type="button"
                   className="bg-green-600 rounded-xl mb-1 p-2 w-full"
-                  onClick={() => on_edit(stu.id)}
+                  onClick={() => on_edit(stu._id)}
                 >
                   edit
                 </button>
                 <button
                   type="button"
                   className="bg-red-600 rounded-xl p-2 w-full"
-                  onClick={() => on_delete(stu.id)}
+                  onClick={() => on_delete(stu._id)}
                 >
                   delete
                 </button>
