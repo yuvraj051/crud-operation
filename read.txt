@@ -5,6 +5,7 @@
 2.CREATE  === >>>>        http://localhost:3000/user/api/create
 3.UPDATE  === >>>>        http://localhost:3000/user/api/update
 4.DELETE  === >>>>        http://localhost:3000/user/api/delete
+5.DELETEALL  ====>>>     http://localhost:3000/user/api/deleteall
 
 
 PACKAGES USE ===
