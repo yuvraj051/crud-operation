@@ -1,0 +1,5 @@
+BACKEND API ===
+1.READ    === >>>>        http://localhost:3000/user/api/read
+2.CREATE  === >>>>        http://localhost:3000/user/api/create
+3.UPDATE  === >>>>        http://localhost:3000/user/api/update
+4.DELETE  === >>>>        http://localhost:3000/user/api/delete

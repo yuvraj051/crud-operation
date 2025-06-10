@@ -33,6 +33,7 @@ export const create = async (req, res) => {
     console.log(error);
   }
 };
+
 export const read = async (req, res) => {
   try {
     const data = await User.find();
@@ -44,12 +45,24 @@ export const read = async (req, res) => {
     res.status(400).json({ error, message: "internal server error..." });
   }
 };
+
 export const update = async (req, res) => {
   try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(409).json({ message: "missing userId.." });
+    }
+    const user = req.body;
+    const update = await User.findByIdAndUpdate(id, user, { new: true });
+    if (!update) {
+      return res.status(409).json({ message: "User not Found...." });
+    }
+    res.status(200).json({ update, message: "data updated..." });
   } catch (error) {
     res.status(400).json({ error, message: "internal server error..." });
   }
 };
+
 export const deleteuser = async (req, res) => {
   try {
   } catch (error) {
