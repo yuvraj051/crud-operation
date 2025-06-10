@@ -1,18 +1,20 @@
 import express from "express";
 import dotenv from "dotenv";
-import db from "../backend/config/db.js";
+import db from "../backend/config/db.js"; // Make sure this path is correct
 import route from "./routes/route.js";
 
-const app = express();
-app.use(express.json());
-dotenv.config();
+dotenv.config(); // Should come before using environment variables
 
-db();
+const app = express();
+
+app.use(express.json()); // Middleware to parse JSON bodies
+
+db(); // Connect to MongoDB
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`server is running on  ${PORT}`);
-});
-
 app.use("/user/api", route);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

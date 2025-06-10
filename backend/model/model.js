@@ -1,26 +1,26 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 
-const userschema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
-    Type: String,
+    type: String,
     required: true,
   },
   email: {
-    Type: String,
+    type: String,
     required: true,
     unique: true,
   },
   password: {
-    Type: String,
+    type: String,
     required: true,
   },
   gender: {
-    Type: String,
+    type: String,
     enum: ["male", "female"],
     required: true,
   },
 });
 
-const User = mongoose.model("User    ", userschema);
+const User = mongoose.model("User", userSchema); // Clean name, no extra spaces
 
-export default userschema;
+export default User; // Export the model, not the schema
