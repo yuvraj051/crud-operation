@@ -93,3 +93,16 @@ export const deleteuser = async (req, res) => {
       .json({ error: error.message, message: "Internal server error." });
   }
 };
+
+export const deleteall = async (req, res) => {
+  try {
+    const user = await User.deleteMany();
+
+    res.status(200).json({ message: "All Users are deleted...." });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: error.message, message: "Internal server error." });
+    console.log(error);
+  }
+};
