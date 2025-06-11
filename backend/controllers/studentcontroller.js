@@ -61,9 +61,10 @@ export const login = async (req, res) => {
       email: user.email,
     };
 
-    const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
+<<<<<<< HEAD
     return res
       .cookie("token", token, {
         httpOnly: true,
@@ -77,6 +78,9 @@ export const login = async (req, res) => {
         user: user,
         token,
       });
+=======
+    res.json({ message: `Signin successful  welcome ${user.email}`, token });
+>>>>>>> 36ec89ba3dc633b2db44b78b440c26ba47a0c230
   } catch (error) {
     res.status(400).json({ message: "internal server error.." });
     console.log(error);
