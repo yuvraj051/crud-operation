@@ -220,8 +220,9 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home(props) {
   const [submit_state, set_submit_state] = useState("insert");
   const [studentsList, set_studentsList] = useState([]);
   const [id, set_id] = useState("");
@@ -229,6 +230,18 @@ export default function Home() {
   const [txt_email, setEmail] = useState("");
   const [txt_password, setPassword] = useState("");
   const [txt_gender, setGender] = useState("");
+
+  const Navigate = useNavigate();
+  useEffect(() => {
+    if (props.p_is_login) {
+      console.log("valid for login");
+    } else {
+      console.log("not valid for login");
+
+      Navigate("/");
+    }
+    return () => {};
+  }, []);
 
   const fetchData = async () => {
     try {

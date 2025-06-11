@@ -1,19 +1,36 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+export default function Signup(props) {
   const [User, setUser] = useState({
     name: "",
     gender: "",
     email: "",
     password: "",
-    mobile_number: "",
+    phone: "",
     address: "",
   });
   const Navigate = useNavigate();
   // start functions
-  const handle_singup = () => {
-    console.log(User);
+  const handle_singup = async (e) => {
+    // http://localhost:3000/student/api/register
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/student/api/register",
+        User
+      );
+      console.log("response -> " + response.data);
+      toast.success(response.data.message);
+      props.p_set_is_login(true);
+      Navigate("/home");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    // console.log(User);
   };
   const handle_singin = () => {
     Navigate("/");
@@ -60,9 +77,9 @@ export default function Signup() {
             <input
               type="number"
               placeholder="mobile number"
-              value={User.mobile_number}
+              value={User.phone}
               onChange={(e) => {
-                setUser({ ...User, mobile_number: e.target.value });
+                setUser({ ...User, phone: e.target.value });
               }}
               className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-400"
             />
@@ -119,6 +136,7 @@ export default function Signup() {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

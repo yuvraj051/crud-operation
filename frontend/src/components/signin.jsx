@@ -1,7 +1,8 @@
+import axios from "axios";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-export default function Signin() {
+export default function Signin(props) {
   const [User, setUser] = useState({
     email: "",
     password: "",
@@ -9,9 +10,19 @@ export default function Signin() {
   const Navigate = useNavigate();
 
   // start functions
-  const handle_singin = () => {
-    console.log(User);
+  const handle_singin = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/student/api/login",
+        User
+      );
+      props.p_set_is_login(true);
+      Navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const handle_singup = () => {
     Navigate("/singup");
   };
@@ -24,7 +35,7 @@ export default function Signin() {
         {/* Form Section */}
         <div className="bg-white rounded shadow-lg w-full max-w-md p-6 mb-8 mt-9">
           <h2 className="text-2xl font-semibold text-center text-blue-600 mb-4">
-            Student Registration
+            Student login
           </h2>
           <form className="space-y-4">
             <input
