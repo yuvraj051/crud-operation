@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import db from "../backend/config/db.js"; // Make sure this path is correct
 import route from "./routes/route.js";
+import studentroute from "./routes/studentroute.js";
+
 import cors from "cors";
 
 dotenv.config(); // Should come before using environment variables
@@ -17,6 +19,7 @@ db(); // Connect to MongoDB
 const PORT = process.env.PORT || 4000;
 
 app.use("/user/api", route);
+app.use("/student/api", studentroute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

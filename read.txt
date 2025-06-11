@@ -7,6 +7,8 @@
 4.DELETE  === >>>>        http://localhost:3000/user/api/delete
 5.DELETEALL  ====>>>     http://localhost:3000/user/api/deleteall
 
+1. REGISTRATION ===>>   http://localhost:3000/student/api/register
+2.LOGIN    ===>      http://localhost:3000/student/api/login
 
 PACKAGES USE ===
 ├── bcrypt@6.0.0
